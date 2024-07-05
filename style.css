@@ -1,0 +1,21 @@
+.display {
+  width: 80%;
+  outline: 2px solid gray;
+  margin: 0 auto;
+  font-size: 2rem;
+  text-align: right;
+  padding: 0.4rem 1rem;
+}
+.calc-buttons {
+  width: 80%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.calc-buttons button {
+  font-size: 2rem;
+  width: 80px;
+  height: 80px;
+  margin: 0.5rem;
+  cursor: pointer;
+}
