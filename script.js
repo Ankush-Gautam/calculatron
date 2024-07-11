@@ -1,50 +1,66 @@
-function add(firstNum, secondNum) {
-  return firstNum + secondNum;
-}
+const buttons = document.querySelectorAll('.btn');
+const display = document.querySelector('.display');
+const result = document.querySelector('.result');
 
-function subtract(firstNum, secondNum) {
-  return firstNum - secondNum;
-}
+let userInput = '';
+let operator = '';
+let operands = [];
+let operatorsList = ['+', '-', '*', '/', '='];
 
-function multiply(firstNum, secondNum) {
-  return firstNum * secondNum;
-}
+buttons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    console.log('operands length = ', operands.length);
 
-function divide(firstNum, secondNum) {
-  return firstNum / secondNum;
-}
+    //to extract firstNum before user hits any operators or clearscreen
+    if (operatorsList.includes(btn.textContent)) {
+      //do calculations if '=' is pressed and all numbers are entered
+      if (btn.textContent === '=' && operands.length === 2) {
+        operands.push(parseFloat(userInput));
+        result.textContent = operate(operands[0], operator, operands[1]);
+        operands.shift();
+      }
 
-function calc(firstNum, secondNum, operator) {
-  let result = 0;
+      //ignore '=' to be include in operator
+      if (btn.textContent != '=') {
+        operator = btn.textContent;
+      }
+      operands.push(parseFloat(userInput));
+      userInput = '';
+    }
 
+    //clear screen if 'AC' is pressed and reset all values
+    else if (btn.textContent === 'AC') {
+      display.textContent = '';
+      result.textContent = 0;
+      operands = [];
+      operator = '';
+      userInput = '';
+    } else {
+      userInput += btn.textContent;
+      display.textContent = userInput;
+    }
+
+    console.log(operands);
+    console.log(operator);
+  });
+});
+
+//calculate
+function operate(firstNum, operator, secondNum) {
   switch (operator) {
     case '+':
-      result = add(firstNum, secondNum);
-      break;
+      return firstNum + secondNum;
 
     case '-':
-      result = subtract(firstNum, secondNum);
-      break;
+      return firstNum - secondNum;
 
     case '*':
-      result = multiply(firstNum, secondNum);
-      break;
+      return firstNum * secondNum;
 
     case '/':
-      result = divide(firstNum, secondNum);
-      break;
-  }
+      return firstNum / secondNum;
 
-  return result;
+    default:
+      return 'Error!';
+  }
 }
-
-// DOM
-const digitsContainer = document.body.querySelector('.digits-btns');
-const displayOperations = document.body.querySelector('#display-operations');
-
-digitsContainer.addEventListener('click', (event) => {
-  if (event.target.classList.contains('button')) {
-    const firstNum = event.target.getAttribute('data-button');
-    displayOperations.textContent = firstNum;
-  }
-});

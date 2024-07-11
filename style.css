@@ -1,21 +1,34 @@
-.display {
-  width: 80%;
-  outline: 2px solid gray;
-  margin: 0 auto;
-  font-size: 2rem;
-  text-align: right;
-  padding: 0.4rem 1rem;
+* {
+  box-sizing: border-box;
 }
-.calc-buttons {
-  width: 80%;
+.display-container {
+  border: 2px solid gray;
+  text-align: right;
+  height: 100px;
+  padding: 0.4rem;
+  margin: 1rem 0;
+  line-height: 0;
+}
+
+.display {
+  color: grey;
+}
+
+.result {
+  font-size: 3rem;
+}
+
+.main-container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
 }
 
 .calc-buttons button {
   font-size: 2rem;
   width: 80px;
   height: 80px;
-  margin: 0.5rem;
+  padding: 0.5rem;
   cursor: pointer;
+  margin-top: 0.6rem;
+  margin-right: 0.5rem;
 }
