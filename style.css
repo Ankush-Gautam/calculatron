@@ -1,8 +1,9 @@
 * {
   box-sizing: border-box;
 }
+
 .display-container {
-  border: 2px solid gray;
+  border: 2px solid rgb(107, 137, 226);
   text-align: right;
   height: 100px;
   padding: 0.4rem;
@@ -10,25 +11,28 @@
   line-height: 0;
 }
 
-.display {
-  color: grey;
-}
-
 .result {
   font-size: 3rem;
+  color: rgb(87, 85, 85);
 }
 
 .main-container {
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
 }
 
 .calc-buttons button {
   font-size: 2rem;
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   padding: 0.5rem;
   cursor: pointer;
-  margin-top: 0.6rem;
-  margin-right: 0.5rem;
+  background-color: royalblue;
+  border: none;
+  color: white;
+  margin: 5px;
+}
+
+.calc-buttons {
+  display: flex;
 }
