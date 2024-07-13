@@ -10,20 +10,24 @@ buttons.forEach((btn) => {
   btn.addEventListener('click', () => {
     //to extract number after user hits any operators or clearscreen
     if (operatorsList.includes(btn.textContent)) {
+      if (operands.includes(NaN)) {
+        operands.length = 0;
+      }
+
       //do calculations if '=' is pressed and all numbers are entered
       if (btn.textContent === '=' && operands.length <= 2) {
         operands.push(parseFloat(userInput));
 
-        //calculate the last two operands of the array
+        //calculating & displaying the result, the last two elements of the array contains the accumulated result
         display.textContent = operate(
           operands[operands.length - 2],
           operator,
           operands[operands.length - 1]
-        );
+        ).toFixed(4);
         operands.push(parseFloat(display.textContent));
       }
 
-      //ignore '=' to be include in operator
+      //getting operator, '=' excluded
       if (btn.textContent != '=') {
         operator = btn.textContent;
       }
@@ -47,14 +51,25 @@ buttons.forEach((btn) => {
       userInput += btn.textContent;
       display.textContent = parseFloat(userInput);
     }
-
-    console.log(operands);
-    console.log(operator);
   });
 });
 
 //calculate
-function operate(firstNum = 0, operator, secondNum = 0) {
+function operate(firstNum, operator, secondNum) {
+  //handling error prone
+  if (
+    firstNum === undefined ||
+    secondNum === undefined ||
+    firstNum === NaN ||
+    secondNum === NaN
+  ) {
+    operands.length = 0;
+    operator = '';
+    userInput = '';
+    display.textContent = 0;
+    return 0;
+  }
+
   switch (operator) {
     case '+':
       return firstNum + secondNum;
@@ -66,6 +81,10 @@ function operate(firstNum = 0, operator, secondNum = 0) {
       return firstNum * secondNum;
 
     case '/':
+      if (secondNum === 0) {
+        display.textContent = 'Error: Division by 0!';
+        throw 'Error: Division by 0!';
+      }
       return firstNum / secondNum;
 
     default:
