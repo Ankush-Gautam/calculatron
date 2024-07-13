@@ -48,8 +48,10 @@ buttons.forEach((btn) => {
 
     //user inputting the numbers other than operators
     else {
-      userInput += btn.textContent;
-      display.textContent = parseFloat(userInput);
+      if (userInput.length < 10) {
+        userInput += btn.textContent;
+        display.textContent = parseFloat(userInput);
+      }
     }
   });
 });
@@ -82,7 +84,7 @@ function operate(firstNum, operator, secondNum) {
 
     case '/':
       if (secondNum === 0) {
-        display.textContent = 'Error: Division by 0!';
+        display.textContent = 'ERROR';
         throw 'Error: Division by 0!';
       }
       return firstNum / secondNum;
