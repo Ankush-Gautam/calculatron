@@ -1,43 +1,51 @@
 const buttons = document.querySelectorAll('.btn');
-const display = document.querySelector('.display');
-const result = document.querySelector('.result');
+const display = document.querySelector('.result');
 
 let userInput = '';
 let operator = '';
 let operands = [];
-let operatorsList = ['+', '-', '*', '/', '='];
+const operatorsList = ['+', '-', '*', '/', '='];
 
 buttons.forEach((btn) => {
   btn.addEventListener('click', () => {
-    console.log('operands length = ', operands.length);
-
-    //to extract firstNum before user hits any operators or clearscreen
+    //to extract number after user hits any operators or clearscreen
     if (operatorsList.includes(btn.textContent)) {
       //do calculations if '=' is pressed and all numbers are entered
-      if (btn.textContent === '=' && operands.length === 2) {
+      if (btn.textContent === '=' && operands.length <= 2) {
         operands.push(parseFloat(userInput));
-        result.textContent = operate(operands[0], operator, operands[1]);
-        operands.shift();
+
+        //calculate the last two operands of the array
+        display.textContent = operate(
+          operands[operands.length - 2],
+          operator,
+          operands[operands.length - 1]
+        );
+        operands.push(parseFloat(display.textContent));
       }
 
       //ignore '=' to be include in operator
       if (btn.textContent != '=') {
         operator = btn.textContent;
       }
-      operands.push(parseFloat(userInput));
+
+      if (operands.length < 2) operands.push(parseFloat(userInput));
+      else operands.shift();
+
       userInput = '';
     }
 
     //clear screen if 'AC' is pressed and reset all values
     else if (btn.textContent === 'AC') {
-      display.textContent = '';
-      result.textContent = 0;
-      operands = [];
+      display.textContent = 0;
+      operands.length = 0;
       operator = '';
       userInput = '';
-    } else {
+    }
+
+    //user inputting the numbers other than operators
+    else {
       userInput += btn.textContent;
-      display.textContent = userInput;
+      display.textContent = parseFloat(userInput);
     }
 
     console.log(operands);
@@ -46,7 +54,7 @@ buttons.forEach((btn) => {
 });
 
 //calculate
-function operate(firstNum, operator, secondNum) {
+function operate(firstNum = 0, operator, secondNum = 0) {
   switch (operator) {
     case '+':
       return firstNum + secondNum;
